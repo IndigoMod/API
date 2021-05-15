@@ -1,5 +1,7 @@
 const http = require('http');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const { parse } = require('querystring');
+
 const server = http.createServer((req, res) => {
     if (req.method === 'POST') {
         let body = '';
@@ -10,11 +12,9 @@ const server = http.createServer((req, res) => {
             console.log("Request made to API with valid request method.");
             try {
               const reqparse = JSON.parse(body);
-              if (reqparse.method === "test") {
-                res.end("ok");
-              }
+              res.end("ok");
             }
-            catch(e) {
+            catch {
               res.end("bad");
             }
         });
@@ -30,24 +30,4 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(3000);
-
-function loadRepoUrl(author, repo) {
-  
-}
-
-function fetch(url) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        var response = xhttp.responseText;
-        return response;
-    }
-  };
-  xhttp.open("GET", url, true);
-  xhttp.send();
-}
-
-function getRootUrl(url) {
-  return url.toString().replace(/^(.*\/\/[^\/?#]*).*$/,"$1");
-}
+server.listen(8080);
