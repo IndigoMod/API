@@ -3,3 +3,10 @@
 
 ## Requires
 Node.JS
+
+## IndigoMod API location
+`https://api.studiouifxdesig.repl.co/`
+
+## Documentation
+Use JSON formatted request:
+`{"method":"test"}`
