@@ -1,8 +1,9 @@
 const http = require('http');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const { parse } = require('querystring');
-
+const fs = require('fs');
 const server = http.createServer((req, res) => {
+    console.log("Client connected to API.");
     if (req.method === 'POST') {
         let body = '';
         req.on('data', chunk => {
@@ -12,22 +13,33 @@ const server = http.createServer((req, res) => {
             console.log("Request made to API with valid request method.");
             try {
               const reqparse = JSON.parse(body);
-              res.end("ok");
+              if (reqparse.method === "validate") {
+                res.end(BuildJSON('"valid":"true"'));
+              }
+              else if (reqparse.method === "doc") {
+                res.end(BuildJSON('documentation-url":"https://github.com/IndigoMod/API/blob/master/README.md"}'));
+              }
+              console.log("-- Request made to API with valid request content.");
             }
-            catch {
-              res.end("bad");
+            catch(e) {
+              console.log("-- Request made to API with invalid request content.");
+              res.end(BuildJSON('"valid":"false", "err":"' + e + '"'));
             }
+            console.log("---- Request processing finished.");
         });
     }
     else {
-      res.end(`
-        <body>
-          <h1>Bad HTTP method.</h1>
-          <h2>The current HTTP request method (` + req.method.toString() + `) is not valid for this request.</h2>
-          <h3>Try using a POST request instead.</h3>
-        </body>
-      `);
+      fs.readFile('badmethod.html', 'utf8', function(err, data) {
+      if (err) throw err;
+        res.end(data.replace("__method", req.method));
+      });
     }
 });
 
 server.listen(8080);
+
+function BuildJSON(content) {
+  return '{"text-type":"json", ' + content + '}';
+}
+
+console.log("Running API.");
