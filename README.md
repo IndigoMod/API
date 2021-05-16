@@ -8,5 +8,4 @@ Node.JS
 `https://api.studiouifxdesig.repl.co/`
 
 ## Documentation
-Use JSON formatted request:
-`{"method":"test"}`
+Use JSON formatted POST requests.
