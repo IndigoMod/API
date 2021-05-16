@@ -14,16 +14,16 @@ const server = http.createServer((req, res) => {
             try {
               const reqparse = JSON.parse(body);
               if (reqparse.method === "validate") {
-                res.end(BuildJSON('"valid":"true"'));
+                res.end(buildJSON('"valid":"true"'));
               }
               else if (reqparse.method === "doc") {
-                res.end(BuildJSON('documentation-url":"https://github.com/IndigoMod/API/blob/master/README.md"}'));
+                res.end(buildJSON('documentation-url":"https://github.com/IndigoMod/API/blob/master/README.md"}'));
               }
               console.log("-- Request made to API with valid request content.");
             }
             catch(e) {
               console.log("-- Request made to API with invalid request content.");
-              res.end(BuildJSON('"valid":"false", "err":"' + e + '"'));
+              res.end(buildJSON('"valid":"false", "err":"' + e + '"'));
             }
             console.log("---- Request processing finished.");
         });
@@ -38,7 +38,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(8080);
 
-function BuildJSON(content) {
+function buildJSON(content) {
   return '{"text-type":"json", ' + content + '}';
 }
 
