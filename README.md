@@ -1,12 +1,12 @@
-## How to run:
-`npm install` and `node index.js`
+This is the API meant for the project made by UCYT5040 and I called "IndigoMod".
+The Indigo API is meant for collecting statistics from IndigoMod's modloader.
+IndigoMod is a modloader made for Minecraft Bedrock Edition.
 
-## Requires
-Node.JS
+View the project at [IndigoMod's website](https://indigomod.github.io/)
 
-## IndigoMod API location
-`https://api.studiouifxdesig.repl.co/`
+If you came here from my NodeJS api tutorial, thank you!
+I hope you'll come and see my other tutorials as well.
 
-## Documentation
-Use JSON formatted request:
-`{"method":"test"}`
+``` 
+ - Steve and UCYT
+```
