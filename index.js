@@ -9,7 +9,6 @@ var KeepAliveAgent = require('keep-alive-agent'),
 let sectimer = 0;
 
 const server = http.createServer((req, res) => {
-  printlib.printWarn("Client connected to API.");
   if (req.method === 'POST') {
     let body = '';
     req.on('data', chunk => {
@@ -19,19 +18,26 @@ const server = http.createServer((req, res) => {
       try {
         const reqparse = JSON.parse(body);
         if (reqparse.method == "online") {
-          res.end(buildJSON('"valid":"true","online":"true"'))
+          res.end(printlib.buildJSON(`"valid":"true","online":"true"`))
+        }
+        if (reqparse.method == "ip") {
+          const forwarded = req.headers['x-forwarded-for'];
+          const ip = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress;
+          res.end(printlib.buildJSON(`"valid":"true","ip":"` + ip + `"`))
         }
         else {
-          res.end(buildJSON('"valid":"false","err":"unknown-command"'));
+          res.end(printlib.buildJSON(`"valid":"false","err":"unknown-command"`));
         }
-        res.end(buildJSON('"valid":"true"'));
+        res.end(printlib.buildJSON(`"valid":"true"`));
       }
       catch (e) {
-        res.end(buildJSON('"valid":"false","err":"' + e + '"'));
+        res.end(printlib.buildJSON(`"valid":"false","err":"` + e + `"`));
+        printlib.printError("Client made the API throw an err: " + e + ".");
       }
     });
   }
   else {
+    printlib.printError("Client connected with invalid method.");
     fs.readFile('badmethod.html', 'utf8', function(err, data) {
       if (err) throw err;
       res.end(data.replace("__method$$", req.method));
@@ -45,10 +51,6 @@ var keepaliveOpt = {
     path: '/',
     agent: new KeepAliveAgent(),
 };
-
-function buildJSON(content) {
-  return '{"text-type":"json",' + content + '}';
-}
 
 printlib.printInfo("Running API.");
 server.listen(8080);

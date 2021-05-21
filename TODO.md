@@ -1,7 +1,5 @@
-# TODO
-- [ ] Connect with the IndigoMod loader (such as implementing a method that checks if IndigoMod is running on any device).
-  - [ ] Add a check to see if user is using safe plugins, or if a possibly dangerous plugin was found.
-- [ ] Make an API method that allows for reading and parsing of packets.
-- [ ] Port to Express from HTTP (currently too lazy to do this, will do soon hopefully. HTTP is substantially enough to run an API as of now).
-- [x] Make dynamic JSON response builder (May cause errors, can change back).
-- [x] Make documentation request method.
+- Move to a more reliable host than ReplIT. (Pebblehost, **Bluehost**, etc?)
+- Port to Express (Should be easy!)
+- Move to Python and Flask due to its reliability and speed (Probably not going to be easy, I prefer NodeJS)
+- Grab custom domain (Reccomending api.indigo.ucyt.dev). Can you confirm that's a valid subdomain UCYT? Too poor to buy my own :)
+- Restrict some files.

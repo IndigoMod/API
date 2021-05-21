@@ -11,3 +11,7 @@ exports.printWarn = function(msg) {
 exports.printError = function(msg) {
   console.log(chalk.red("[ERR] ") + "> " + msg);
 }
+
+exports.buildJSON = function(content) {
+  return `{"text-type":"json",` + content + `}`;
+}
